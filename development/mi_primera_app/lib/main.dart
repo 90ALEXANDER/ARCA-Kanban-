@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/kanban_screen.dart';
 
 void main() {
   runApp(const ArcaApp());
@@ -13,7 +14,7 @@ class ArcaApp extends StatelessWidget {
       title: 'ARCA Workspace',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color(0xFF080B11), // Deep Pitch Black
+        scaffoldBackgroundColor: const Color(0xFF080B11),
         primaryColor: const Color(0xFF7C3AED),
         colorScheme: const ColorScheme.dark(
           primary: Color(0xFF8B5CF6),
@@ -31,13 +32,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Detectamos si la pantalla es ancha (Escritorio/Laptop) o angosta (Celular)
     final isDesktop = MediaQuery.of(context).size.width > 700;
 
     return Scaffold(
       body: Row(
         children: [
-          // 1. SIDEBAR NAVEGACIÓN (Solo visible en pantallas anchas)
           if (isDesktop)
             Container(
               width: 80,
@@ -54,6 +53,7 @@ class HomeScreen extends StatelessWidget {
                     child: const Icon(Icons.rocket_launch, color: Color(0xFF8B5CF6), size: 28),
                   ),
                   const SizedBox(height: 40),
+                  _buildSidebarIcon(Icons.grid_view_round, true),
                   _buildSidebarIcon(Icons.view_kanban_outlined, false),
                   _buildSidebarIcon(Icons.folder_open_rounded, false),
                   _buildSidebarIcon(Icons.analytics_outlined, false),
@@ -63,8 +63,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-
-          // 2. CONTENIDO PRINCIPAL
           Expanded(
             child: SafeArea(
               child: SingleChildScrollView(
@@ -75,7 +73,6 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // HEADER SUPERIOR
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -88,6 +85,7 @@ class HomeScreen extends StatelessWidget {
                                       'ARCA',
                                       style: TextStyle(
                                         fontSize: 26,
+                                        fontWeight: FontWeight.black,
                                         letterSpacing: 2,
                                         color: Color(0xFF8B5CF6),
                                       ),
@@ -118,8 +116,6 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 25),
-
-                        // BANNER PRINCIPAL CON GRADIENTE VIBRANTE
                         Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(22),
@@ -188,8 +184,6 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 25),
-
-                        // METRICAS DINÁMICAS (TARJETAS GLOW)
                         Row(
                           children: const [
                             Expanded(
@@ -221,12 +215,11 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 25),
-
-                        // BOTÓN NEÓN PRINCIPAL A KANBAN
                         InkWell(
                           onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Abriendo Tablero Kanban...')),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const KanbanScreen()),
                             );
                           },
                           borderRadius: BorderRadius.circular(18),
@@ -285,7 +278,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// TARJETAS ESTILO CYBERPUNK / Oled Dark
 class _DarkStatCard extends StatelessWidget {
   final String title;
   final String count;
