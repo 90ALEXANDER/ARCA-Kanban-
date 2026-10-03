@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/kanban_screen.dart';
+import 'screens/kanban_screen.dart'; // Cambia a 'kanban_screen.dart' si no mueves el archivo a la carpeta screens
 
 void main() {
   runApp(const ArcaApp());
@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                     child: const Icon(Icons.rocket_launch, color: Color(0xFF8B5CF6), size: 28),
                   ),
                   const SizedBox(height: 40),
-                  _buildSidebarIcon(Icons.grid_view_round, true),
+                  _buildSidebarIcon(Icons.grid_view_rounded, true), // Corregido: grid_view_rounded
                   _buildSidebarIcon(Icons.view_kanban_outlined, false),
                   _buildSidebarIcon(Icons.folder_open_rounded, false),
                   _buildSidebarIcon(Icons.analytics_outlined, false),
@@ -85,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                                       'ARCA',
                                       style: TextStyle(
                                         fontSize: 26,
-                                        fontWeight: FontWeight.black,
+                                        fontWeight: FontWeight.w900, // Corregido: FontWeight.w900
                                         letterSpacing: 2,
                                         color: Color(0xFF8B5CF6),
                                       ),
@@ -219,7 +219,9 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const KanbanScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => const KanbanScreen(),
+                              ),
                             );
                           },
                           borderRadius: BorderRadius.circular(18),
